@@ -19,7 +19,7 @@
 #include "an8801.h"
 
 #define phydev_cfg(phy)            ((struct an8801r_priv *)(phy)->priv)
-#define phydev_dev(_dev) (&_dev->dev)
+#define phydev_dev(_dev) ((_dev)->dev)
 
 /* For reference only
  *	GPIO1    <-> LED0,
@@ -303,7 +303,7 @@ static int
 an8801sb_config(struct phy_device *phydev)
 {
 	u32 reg_value, phy_id, led_id;
-	struct device *dev = phydev_dev(phydev);
+	struct udevice *dev = phydev_dev(phydev);
 	struct an8801r_priv *priv = NULL;
 	int ret;
 
@@ -320,7 +320,7 @@ an8801sb_config(struct phy_device *phydev)
 		return -1;
 	}
 
-	priv = devm_kzalloc((struct udevice *)dev, sizeof(struct an8801r_priv), 0);
+	priv = devm_kzalloc(dev, sizeof(struct an8801r_priv), 0);
 	if (!priv)
 		return -ENOMEM;
 
