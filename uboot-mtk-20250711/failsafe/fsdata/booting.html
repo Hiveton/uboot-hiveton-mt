@@ -1,39 +1,118 @@
 <!DOCTYPE HTML>
 <html>
-	<head>
-		<meta charset="utf-8">
-		<title>Booting initramfs</title>
-		<link rel="stylesheet" href="/style.css">
-		<script src="/main.js"></script>
-		<script>
-			function init() {
-				getversion();
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Booting Initramfs | HiGoOS U-Boot</title>
+    <link rel="stylesheet" href="/style.css">
+    <script src="/main.js"></script>
+    <script>
+        function init() {
+            getversion();
 
-				ajax({
-					url: '/result',
-					done: function(response) {
-						if (response == 'failed') {
-							location = '/fail.html'
-							return
-						}
+            ajax({
+                url: '/result',
+                done: function(response) {
+                    if (response == 'failed') {
+                        location = '/fail.html'
+                        return
+                    }
 
-						document.getElementById('title').innerHTML = 'BOOT SUCCESS'
-						document.getElementById('info').innerHTML = 'Your device was successfully booted into initramfs!'
-					},
-					timeout: 30000
-				})
-			}
-		</script>
-	</head>
-	<body onload="init()">
-		<div id="m">
-			<h1 id="title">BOOTING INITRAMFS</h1>
-			<p id="info">
-				Your file was successfully uploaded! Booting is in progress, please wait...<br>
-				This page may be in not responding status for a short time.
-			</p>
-			<div id="l"></div>
-		</div>
-		<div id="version"></div>
-	</body>
+                    document.getElementById('title').innerHTML = 'BOOT SUCCESS'
+                    document.getElementById('status-badge').className = 'status-badge success'
+                    document.getElementById('status-badge').innerHTML = '<span></span>Success'
+                    document.getElementById('info').innerHTML = 'Your device was successfully booted into initramfs!'
+                    document.getElementById('spinner').style.display = 'none'
+                    document.getElementById('success-icon').style.display = 'block'
+                },
+                timeout: 30000
+            })
+        }
+    </script>
+</head>
+<body onload="init()">
+    <div class="app-container">
+        <!-- Sidebar Navigation -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <h2>⚡ HiGoOS U-Boot</h2>
+                <div class="subtitle">Failsafe Recovery</div>
+            </div>
+            
+            <nav class="sidebar-nav">
+                <div class="nav-section">
+                    <div class="nav-section-title">Main</div>
+                    <a href="/index.html" class="nav-item">
+                        <span class="icon">📦</span>
+                        <span>Firmware Update</span>
+                    </a>
+                    <a href="/initramfs.html" class="nav-item">
+                        <span class="icon">🚀</span>
+                        <span>Boot Initramfs</span>
+                    </a>
+                </div>
+                
+                <div class="nav-section">
+                    <div class="nav-section-title">Advanced</div>
+                    <a href="/bl2.html" class="nav-item">
+                        <span class="icon">🔧</span>
+                        <span>BL2 Preloader</span>
+                    </a>
+                    <a href="/uboot.html" class="nav-item">
+                        <span class="icon">⚙️</span>
+                        <span>U-Boot</span>
+                    </a>
+                    <a href="/gpt.html" class="nav-item">
+                        <span class="icon">💾</span>
+                        <span>GPT Partition</span>
+                    </a>
+                </div>
+            </nav>
+            
+            <div class="sidebar-footer" id="version"></div>
+            <div style="text-align: center; padding: 12px; color: var(--text-secondary); font-size: 10px; border-top: 1px solid var(--border-color);">
+                <a href="http://www.hiveton.com" target="_blank" style="color: var(--accent-blue); text-decoration: none;">Hiveton</a> HiGoOS U-BOOT 2026
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <div class="card" style="text-align: center; padding: 60px 40px;">
+                <div id="spinner" class="spinner"></div>
+                
+                <div id="success-icon" style="display: none; margin-bottom: 24px;">
+                    <div style="width: 80px; height: 80px; margin: 0 auto; background: rgba(16, 185, 129, 0.2); border-radius: 50%; display: flex; align-items: center; justify-content: center; border: 2px solid var(--accent-green);">
+                        <span style="font-size: 40px;">✓</span>
+                    </div>
+                </div>
+
+                <span id="status-badge" class="status-badge processing" style="margin-bottom: 20px;">
+                    <span></span>
+                    Booting
+                </span>
+
+                <h1 id="title" style="font-size: 28px; margin: 20px 0; background: linear-gradient(90deg, var(--text-primary), var(--accent-blue)); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">
+                    BOOTING INITRAMFS
+                </h1>
+
+                <p id="info" style="color: var(--text-secondary); max-width: 500px; margin: 0 auto; line-height: 1.6;">
+                    Your file was successfully uploaded! Booting is in progress, please wait...<br><br>
+                    This page may be in not responding status for a short time.
+                </p>
+
+                <div style="margin-top: 40px; padding: 20px; background: rgba(59, 130, 246, 0.1); border-radius: 12px; border: 1px solid var(--border-color);">
+                    <div style="display: flex; align-items: center; justify-content: center; gap: 12px; color: var(--text-secondary);">
+                        <span>⏱️</span>
+                        <span>Please wait while the system boots</span>
+                    </div>
+                </div>
+
+                <!-- Footer -->
+                <div style="text-align: center; padding: 20px; color: var(--text-secondary); font-size: 12px; border-top: 1px solid var(--border-color); margin-top: 20px;">
+                    Hiveton HiGoOS U-BOOT 2026
+                </div>
+            </div>
+        </main>
+    </div>
+</body>
 </html>
